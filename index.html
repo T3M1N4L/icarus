@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>ICARUS - ChromeOS Unenrollment Exploit</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <meta name="description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
+    <meta property="og:url" content="https://icarus.t3rm1n4l.dev">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ICARUS">
+    <meta property="og:description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="icarus.t3rm1n4l.dev">
+    <meta property="twitter:url" content="https://icarus.t3rm1n4l.dev">
+    <meta name="twitter:title" content="ICARUS">
+    <meta name="twitter:description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://t3rm1n4l.dev/img/favicon.ico" sizes="96x96" />
+
+  </head>
+  <body>
+    <div class="header" style="z-index:0;padding:0;margin:0;">
+      <div class="retro"></div>
+      <div style="top:5px; right:10px; position:absolute; font-size:large;">--:--</div>
+      <h1>ICARUS</h1>
+      <small>ChromeOS Unenrollment Exploit</small>
+      <div style="padding-bottom: 3%;"></div>
+    </div>
+    <div class="main">
+      <div class="about">
+        <h3> What is ICARUS?</h3>
+        <p>ICARUS is an exploit that allows ChromeOS unenrollment via a proxy and a custom Certificate Authority.</p>
+        <div class="comment-box red-border">
+        <p><strong>WARNING:</strong> Never use public proxies for ICARUS. Always self-host to avoid security risks.</p>
+      </div>
+      </div>
+      <div class="installation">
+        <h3>Building an ICARUS modified shim</h3>
+        <p>Clone the repository and set up the environment:</p>
+        <ol>
+          <li><code>git clone --recursive https://github.com/MunyDev/icarus/</code></li>
+          <li><code>cd icarus</code></li>
+          <li><code>make setup-venv</code></li>
+          <li><code>make enter-venv</code></li>
+          <li><code>make setup-python</code></li>
+          <li><code>make build-packed-data</code></li>
+        </ol>
+        <p>Ensure Chrome's PKIMetadata component is up to date but below version 2000:</p>
+        <ol>
+          <li>Open Chrome on your build machine and go to <code>chrome://components</code>.</li>
+          <li>Press <code>CTRL + F</code> and search for "PKIMetadata".</li>
+          <li>Click "Check for Updates" and ensure it is up to date but below version 2000.</li>
+        </ol>
+        <p>Generate the PKIMetadata:</p>
+        <ol>
+          <li><code>bash get_original_data.sh</code></li>
+          <li><code>bash make_out.sh myCA.der</code></li>
+        </ol>
+        <p>Modify the shim with the generated PKIMetadata:</p>
+        <ol>
+          <li><code>bash modify.sh &lt;shim path&gt;</code></li>
+        </ol>
+        <h3>Flashing a prebuilt shim</h3>
+        <ol>
+          <li>Go to <a href="https://dl.darkn.bio/Icarus">https://dl.darkn.bio/Icarus</a> and download a prebuilt shim.</li>
+          <li>Flash the shim to a USB not and SD card since they often have issues, if you don't know how to flash it's in the FAQ section.</li>
+        </ol>
+        <h3>Booting the shim</h3>
+        <p>Now boot the shim, and ICARUS will attempt to modify your stateful partition. It should say <code>Finished Click Enter to Reboot</code>, which you will click enter, and everything SHOULD go smoothly</p>
+        <div class="comment-box">
+          <p><strong>Steps on how to boot a shim:</strong></p>
+          <ol>
+            <li>Get to the recovery screen by pressing <code>Esc+Refresh+Power</code></li>
+            <li>Once you get to the recovery screen, press <code>Ctrl+D</code></li>
+            <li>It's going to try to make you go back to Secure Mode (It's going to turn off and open up a gray screen), ignore this and press <code>Esc+Refresh+Power</code> once more</li>
+            <li>You should be in developer mode and on the recovery screen, now plug in your USB and it should boot the shim!</li>
+          </ol>
+        </div>
+        <div class="comment-box red-border">
+            <p><strong>Various errors you may encounter</strong></p>
+            <ul>
+              <li>If it gives you a <code>Failed to modify stateful</code> error, simply plug the USB in a different port, if your using a sd card, use a USB</li>
+              <li>If you get a <code>cros_debug</code> error, simply retry and it should work</li>  
+            </ul>
+          </div>
+      </div>
+      <div class="server-setup">
+        <h3>Server Setup</h3>
+        <p>Unlike the upstream repo at <a href="https://github.com/MunyDev/Icarus">MunyDev/Icarus</a> my repo has a fork of applefritters which is a docker image, which fixes many issues with the server</p>
+        <p>Simply install docker on your preferred device and then:</p>
+        <ol>
+          <li>clone docker image with <code>docker pull appleflyer/icarus-server</code></li>
+          <li>run docker image <code>docker run -it -p 0.0.0.0:8126:8126 appleflyer/icarus-server</code></li>
+          <li>A server should start at <code>https://localhost:8126</code></li>
+        </ol>
+        <p>Once the device reboots after booting the shim, and your at the Welcome! screen, don't proceed, do the following:</p>
+        <ol>
+          <li>Click <code>Ctrl+Alt+S</code> , It should open up a menu</li>
+          <li>Connect to WiFi.</li>
+          <li>Edit proxy settings by clicking </li>
+          <li>Set proxy settings to manual.</li>
+          <li>Set Secure HTTP IP to the IP of your proxy server (local ip if it's hosted on localhost). The port will 99.9% be 8126 unless you changed it</li>
+          <li>Resume setup and your device will unenroll.</li>
+        </ol>
+      </div>
+      <div class="faq">
+        <h3>Troubleshooting</h3>
+        <h4><b>Q:</b> My device says "Can't reach Google"!</h4>
+        <p><b>A:</b></p>
+        <ul>
+          <li>Ensure both the device and server are on the same network.</li>
+          <li>If that didn't work, powerwash your device, re-run the modified shim, and keep the server running.</li>
+        </ul>
+        <h4><b>Q:</b> How to Flash a USB/SD card?</h4>
+        <p><b>A:</b></p>
+        <ul>
+          <li>Get <a href="https://etcher.balena.io/">Balena Etcher</a> (i personally recommend), <a href="https://rufus.ie/en/">rufus</a>, or <a href="https://chromewebstore.google.com/detail/chromebook-recovery-utili/pocpnlppkickgojjlmhdmidojbmbodfm?hl=en">Chromebook Recovery Utility</a></li>
+          <li>Then simply follow the instructions provided on the website, or simply ask chatgpt.</li>
+        </ul>
+        <h4><b>Q:</b> How to Find Your Local IP Address? (Linux, Windows, and Mac)</h4>
+<p><b>A:</b></p>
+<ul>
+  <li><b>Linux:</b> Open a terminal and run <code>ip a</code> or <code>hostname -I</code>.</li>
+  <li><b>Windows:</b> Open Command Prompt and run <code>ipconfig</code>. Look for "IPv4 Address" under your active network.</li>
+  <li><b>Mac:</b> Open Terminal and run <code>ipconfig getifaddr en0</code></li>
+</ul>
+
+      </div>
+      <div class="credits">
+        <h3>Credits</h3>
+        <p><b>MunyDev</b> - Lead developer of ICARUS</p>
+        <p><b>Archimax</b> - Script improvements</p>
+        <p><b>r58Playz</b> - General enhancements</p>
+        <p><b>Akane</b> - SSL support and guidance</p>
+        <p><b>Applefritter</b> - Slapping everything onto a docker image</p>
+        <p><b>T3RM1N4L</b> - Making the website</p>
+      </div>
+      <div style="padding-bottom: 3%;"></div>
+
+    </div>
+  </body>
+</html>
