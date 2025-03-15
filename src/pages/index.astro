@@ -1,3 +1,22 @@
+---
+import '../styles/global.css';
+import { GitCommitHorizontal } from 'lucide-astro'
+import { execSync } from 'child_process'
+const getGitInfo = () => {
+  try {
+    const exec = (cmd: string) => execSync(cmd).toString().trim();
+    return {
+      commitHash: exec(`git rev-parse HEAD`),
+    };
+  } catch (error) {
+    console.error("Error getting Git info:");
+    console.error(error);
+    return { commitHash: ""};
+  }
+};
+const commit = getGitInfo()
+
+---
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -22,38 +41,16 @@
     <div class="header" style="z-index:0;padding:0;margin:0;">
       <div class="retro"></div>
       <div style="top:5px; right:10px; position:absolute; font-size:large;">--:--</div>
+      <div style="bottom:10px; left:10px; position:absolute; font-size:small;">
+        <GitCommitHorizontal style={{ verticalAlign: 'middle', color: '#edf1ff' }} />
+        <a style="color:#edf1ff;" href={`https://github.com/T3M1N4L/icarus/commit/${commit.commitHash}`}> {commit.commitHash.slice(0, 7)} </a>
+      </div>
       <h1>ICARUS</h1>
       <small>ChromeOS Unenrollment via Proxy and Custom Certificate Authority</small>
       <div style="padding-bottom: 3%;"></div>
     </div>
     <div class="main">
       <div class="about">
-        <div class="comment-box">
-          <h1>Awesome News</h1>
-          <p>The original ICARUS dev team has archived the repository and stopped maintaining <a href="https://github.com/MunyDev/icarus">MunyDev/Icarus</a>, but a few awesome developers have stepped up to help:
-          <ol>
-            <li><a href="https://kxtz.dev/">kxtz</a></li>
-            <li><a href="https://fanqyxl.net/">fanqyxl</a></li>
-            <li><a href="https://github.com/cosmicdevv">cosmicdevv</a></li>
-          </ol>
-          Due to the work of these amazing people, they have created <a href="https://github.com/cosmicdevv/Icarus-Lite">Icarus-Lite</a> and <a href="https://github.com/fanqyxl/icarus">Icarus Revived</a>
-          </p>
-          <h4>Icarus Lite</h4>
-          <ul>
-            <li>A Python-compiled version of httpmitm.</li>
-            <li>Includes QoL features like an auto cert updater.</li>
-            <li>Compatible with Windows.</li>
-            <li>More info available on its repo (star it to be cool!).</li>
-            <li>Maintained by Cosmic.</li>
-            <li>Icarus Lite does NOT currently have functionality to build Icarus shims. Please download a prebuilt shim to use Icarus Lite, or use Icarus Revived.</li>
-          </ul>          
-          <h4>Icarus Revived</h4>
-          <p>Basically maintained icarus repo</p>
-          <ul>
-            <li><a href="https://github.com/fanqyxl/icarus"> fanqyxl's repo</a></li>
-            <li><a href="https://git.kxtz.dev/kxtzownsu/icarus"> kxtz's repo</a></li>
-          </ul>
-        </div>
         <h3> What is ICARUS?</h3>
         <p>ICARUS is an exploit for Chrome devices which allows people to unenroll devices with device management interception using a proxy and a custom Certificate Authority.</p>
         <div class="comment-box red-border">
@@ -61,6 +58,29 @@
             <strong>WARNING:</strong> Never use public proxies for ICARUS. Always self-host to avoid security risks. Do not use a third-party server since they CAN remotely access your chromebook, remotely enroll you into their domain, giving them your IP and other info, and everything that Google can do like wipe your chromebook and other things.
           </p>
         </div>
+        <h3> What is ICARUS-Lite?</h3>
+        <p>The original dev team had stopped maintaining ICARUS, cosmic, along with the help of others has stepped up to help.</p>
+        <ul>
+          <li>Repo: <a href="https://github.com/cosmicdevv/Icarus-Lite/">https://github.com/cosmicdevv/Icarus-Lite/</a>
+          </li>
+          <li>A Python-compiled version of httpmitm.</li>
+          <li>Includes QoL features like an auto cert updater.</li>
+          <li>Compatible with Windows.</li>
+          <li>More info available on its repo (star it to be cool!).</li>
+          <li>Maintained by Cosmic.</li>
+          <li>ICARUS-Lite does NOT currently have functionality to build Icarus shims. Please download a prebuilt shim to use ICARUS-Lite, or use ICARUS-Revived.</li>
+        </ul>
+        <h3> What is ICARUS-Revived?</h3>
+        <p>ICARUS-Revived is essentially a maintained version of the original repo with new certs and other stuff.</p>
+        <p>Repos:</p>
+        <ul>
+          <li>
+            <a href="https://github.com/fanqyxl/icarus"> fanqyxl's repo</a>
+          </li>
+          <li>
+            <a href="https://git.kxtz.dev/kxtzownsu/icarus"> kxtz's repo</a>
+          </li>
+        </ul>
         <h4 style="font-size: 30px;">What you need/Requirements</h4>
         <ul>
           <li>A Chromebook atleast on <code>kernver 4</code> or below, as well as being on 125-130 (I recommend <a href="https://docs.google.com/presentation/d/1NCXDfjsBVDSR3JrpRXy4C-jz48mkIFaBVntpcbnJX_0/edit#slide=id.g14696d35f7e_0_249">downgrading</a> to v125) </li>
@@ -72,7 +92,7 @@
       </div>
       <div class="installation">
         <h3>Building an ICARUS modified shim</h3>
-        <p>Clone the repository and set up the environment (Make sure you have python3, python3-venv, and protobuf installed beforehand) :</p>
+        <p>Clone either <a href="https://git.kxtz.dev/kxtzownsu/icarus">fanq's repo</a> or <a href="https://git.kxtz.dev/kxtzownsu/icarus">kxtz's repo</a> (for this guide i will be using fanq's repo) and set up the environment (Make sure you have python3, python3-venv, and protobuf installed beforehand) : </p>
         <ol>
           <li>Clone the github repostiory: <code>git clone --recursive https://github.com/fanqyxl/icarus</code>
           </li>
@@ -110,11 +130,14 @@
         </ol>
         <h3>Flashing a prebuilt shim</h3>
         <ol>
-          <li>Go to one of these file hosts:
-            <ul>
-              <li><a href="https://dl.fanqyxl.net/ChromeOS/Prebuilts/Icarus">fanqyxl's file host</a></li>
-              <li><a href="https://dl.kxtz.dev/ChromeOS/shims/Icarus">kxtz's file host</a></li>
-          </ul> and download a prebuilt shim for your corresponding board. </li>
+          <li>Go to one of these file hosts: <ul>
+              <li>
+                <a href="https://dl.fanqyxl.net/ChromeOS/Prebuilts/Icarus">fanqyxl's file host</a>
+              </li>
+              <li>
+                <a href="https://dl.kxtz.dev/ChromeOS/shims/Icarus">kxtz's file host</a>
+              </li>
+            </ul> and download a prebuilt shim for your corresponding board. </li>
           <li>Flash the shim to a USB not and SD card since they often have issues, if you don't know how to flash it's in the Troubleshooting section.</li>
         </ol>
         <h3>Booting the shim</h3>
@@ -144,7 +167,8 @@
       </div>
       <div class="server-setup">
         <h3>Server Setup</h3>
-        <p style="line-height: 1.5;">Unlike the upstream repo at <a href="https://github.com/MunyDev/Icarus">MunyDev/Icarus</a>, applefritter had created a docker image, which fixes many issues with the proxy server. Although it is not updated for Icarus Revived, for Icarus Revived/Icarus Lite, I recommend going to their github repos. For windows users, Icarus Lite has offered a prebuilt exe in it's releases page, simply download it and run it, and it should work out, if not look into Icarus Lite's <code>README.md</code> </p>
+        <p style="line-height: 1.5;">Unlike the upstream repo at <a href="https://github.com/MunyDev/Icarus">MunyDev/Icarus</a>, applefritter had created a docker image, which fixes many issues with the proxy server. Although it is not updated for ICARUS-Revived, for ICARUS-Revived/ICARUS-Lite, I recommend going to their github repos. For windows users, ICARUS-Lite has offered a prebuilt exe in it's releases page, simply download it and run it, and it should work out, if not look into ICARUS-Lite's <code>README.md</code>
+        </p>
         <p>Simply install docker on your preferred device and then:</p>
         <ol>
           <li>clone docker image with <code>docker pull appleflyer/icarus-server</code>
@@ -154,6 +178,25 @@
           <li>A server should start at <code>https://localhost:8126</code>
           </li>
         </ol>
+        <h4>Public servers</h4>
+        <p>you should never use public servers, use this as a last ditch if you can't get the server running or if you don't have a device to host on</p>
+        <ul>
+          <li>
+            <strong>fanq's server</strong>
+            <br> IP: <code>72.80.65.133</code>
+            <br> PORT: <code>8126</code>
+          </li>
+          <li>
+            <strong>kxtz's server</strong>
+            <br> IP: <code>172.93.103.55</code>
+            <br> PORT: <code>8126</code>
+          </li>
+          <li>
+            <strong>cosmic's server</strong>
+            <br> IP: <code>146.190.59.243</code>
+            <br> PORT: <code>8126</code>
+          </li>
+        </ul>
         <p>Once the chromebook reboots after booting the shim, and your at the Welcome! screen, don't proceed, do the following:</p>
         <ol>
           <li>Click <code>Shift+Alt+S</code> , It should open up a menu </li>
@@ -166,19 +209,24 @@
       </div>
       <div class="troubleshooting">
         <h3>Troubleshooting</h3>
-        <h4><b>Q:</b> My device says "Can't reach Google"!</h4>
-        <p><b>A:</b></p>
+        <h4>
+          <b>Q:</b> My device says "Can't reach Google"!
+        </h4>
+        <p>
+          <b>A:</b>
+        </p>
         <ul>
           <li>Ensure both the device and server are on the same network.</li>
           <li>If that didn't work, powerwash your device, re-run the modified shim, and keep the server running.</li>
-          <li>Make sure that Icarus Lite is recieving and handling the ChromeOS device's requests; check the terminal/window where Icarus Lite is running for any output past "Icarus LITE is running on...". If nothing else has been output, it means Icarus Lite isn't recieving requests from the Chromebook and therefore is not handling them accordingly. In this case:</li>
-          <ul><li>Re-run the Icarus shim and ensure the target ChromeOS device and the device hosting the proxy are on the <strong>SAME</strong> WiFi network.
-          </li>
-        <li>Ensure the shim used on the target ChromeOS device was built with the same CA (Certificate Authority) used to generate the SSL certificates
-        </li><ul><li>If you're using a prebuilt shim and don't know what CA was used, consider building your own shim and SSL certificates if nothing else works.
-        </li></ul><li>It is also important to note being above ChromeOS v130 or below ChromeOS v125 will cause the target ChromeOS device to reject the connection to the MiniServer, causing the "Can't reach Google" screen.
-
-        </li></ul>
+          <li>Make sure that ICARUS-Lite is recieving and handling the ChromeOS device's requests; check the terminal/window where ICARUS-Lite is running for any output past "ICARUS-Lite is running on...". If nothing else has been output, it means ICARUS-Lite isn't recieving requests from the Chromebook and therefore is not handling them accordingly. In this case:</li>
+          <ul>
+            <li>Re-run the Icarus shim and ensure the target ChromeOS device and the device hosting the proxy are on the <strong>SAME</strong> WiFi network. </li>
+            <li>Ensure the shim used on the target ChromeOS device was built with the same CA (Certificate Authority) used to generate the SSL certificates </li>
+            <ul>
+              <li>If you're using a prebuilt shim and don't know what CA was used, consider building your own shim and SSL certificates if nothing else works. </li>
+            </ul>
+            <li>It is also important to note being above ChromeOS v130 or below ChromeOS v125 will cause the target ChromeOS device to reject the connection to the MiniServer, causing the "Can't reach Google" screen. </li>
+          </ul>
         </ul>
         <h4>
           <b>Q:</b> How to Flash a USB/SD card?
@@ -198,42 +246,59 @@
           <b>A:</b>
         </p>
         <ul>
-          <li>Kernver - ˈkɝːn.vɚ : noun | Kernel Version; determines what version you can downgrade until; see <a href="https://kvs.kxtz.dev/">KVS</a></li>
-          <li>You can check your kernver by going to the recovery screen - <code>Esc+Power+Refresh</code> and then pressing <code>Tab</code></li>
-          <li>You are looking under <code>TPM</code> it should say something like <code>kernver=0x00010004</code>; In my case it's kernver 4 since thats the number it ends in</li>
+          <li>Kernver - ˈkɝːn.vɚ : noun | Kernel Version; determines what version you can downgrade until; see <a href="https://kvs.kxtz.dev/">KVS</a>
+          </li>
+          <li>You can check your kernver by going to the recovery screen - <code>Esc+Power+Refresh</code> and then pressing <code>Tab</code>
+          </li>
+          <li>You are looking under <code>TPM</code> it should say something like <code>kernver=0x00010004</code>; In my case it's kernver 4 since thats the number it ends in </li>
         </ul>
       </div>
       <div class="credits">
         <h3>Credits</h3>
         <p>
-          <b>MunyDev</b> - Lead developer of ICARUS
+          <b>
+            <a href="https://github.com/MunyDev">MunyDev</a>
+          </b> - Lead developer of ICARUS
         </p>
         <p>
-          <b>Xmb9</b> - Script improvements
+          <b>
+            <a href="https://github.com/EnterTheVoid-x86">Xmb9</a>
+          </b> - Script improvements
         </p>
         <p>
-          <b>r58Playz</b> - General enhancements
+          <b>
+            <a href="https://github.com/r58Playz">r58Playz</a>
+          </b> - General enhancements
         </p>
         <p>
-          <b>Akane</b> - SSL support and guidance
+          <b>
+            <a href="https://github.com/genericness">Akane</a>
+          </b> - SSL support and guidance
         </p>
         <p>
-          <b>Applefritter</b> - Slapping everything onto a docker image
+          <b>
+            <a href="https://github.com/cosmicdevv">cosmicdevv</a>
+          </b> - Writing and maintaining ICARUS-Lite
         </p>
         <p>
-          <b>cosmicdevv</b> - Writing and maintaining Icarus Lite
+          <b>
+            <a href="https://kxtz.dev/">kxtzownsu</a>
+          </b> - Maintaining certificates Icarus uses
         </p>
         <p>
-          <b>kxtzownsu</b> - Maintaining certificates Icarus uses
+          <b>
+            <a href="https://fanqyxl.net/">fanqyxl</a>
+          </b> - Emotional support + keyrolling his chromebook lol
         </p>
         <p>
-          <b>fanqyxl</b> - Emotional support + keyrolling his chromebook lol
+          <b>
+            <a href="https://github.com/AC3GT">AC3</a>
+          </b> - Helping in times of depression and desperate needs
         </p>
         <p>
-          <b>AC3</b> - Helping in times of depression and desperate needs
-        </p>
-        <p>
-          <b>T3RM1N4L</b> - Making the website
+          <b>
+            <a href="https://t3rm1n4l.dev">T3RM1N4L</a>
+          </b> - Making the website
         </p>
       </div>
       <div style="padding-bottom: 3%;"></div>
