@@ -7,14 +7,18 @@ const getGitInfo = () => {
     const exec = (cmd: string) => execSync(cmd).toString().trim();
     return {
       commitHash: exec(`git rev-parse HEAD`),
+      commitMessage: exec(`git log -1 --pretty=%B`)
     };
   } catch (error) {
     console.error("Error getting Git info:");
     console.error(error);
-    return { commitHash: ""};
+    return { commitHash: "", commitMessage: ""};
   }
 };
 const commit = getGitInfo()
+const commitHash = getGitInfo().commitHash
+const commitHashShort = getGitInfo().commitHash.slice(0, 7)
+const commitMessage = getGitInfo().commitMessage.trim()
 
 ---
 <!DOCTYPE HTML>
@@ -41,9 +45,9 @@ const commit = getGitInfo()
     <div class="header" style="z-index:0;padding:0;margin:0;">
       <div class="retro"></div>
       <div style="top:5px; right:10px; position:absolute; font-size:large;">--:--</div>
-      <div style="bottom:10px; left:10px; position:absolute; font-size:small;">
-        <GitCommitHorizontal style={{ verticalAlign: 'middle', color: '#edf1ff' }} />
-        <a style="color:#edf1ff;" href={`https://github.com/T3M1N4L/icarus/commit/${commit.commitHash}`}> {commit.commitHash.slice(0, 7)} </a>
+      <div style="bottom:10px; left:10px; position:absolute; font-size:11px;">
+        <GitCommitHorizontal style={{ verticalAlign: 'middle', stroke: '#edf1ff' }} />
+        <a style="color:#edf1ff;" href={`https://github.com/T3M1N4L/icarus/commit/${commitHash}`}> {commitHashShort}</a> - {commitMessage}
       </div>
       <h1>ICARUS</h1>
       <small>ChromeOS Unenrollment via Proxy and Custom Certificate Authority</small>
@@ -166,18 +170,26 @@ const commit = getGitInfo()
         </div>
       </div>
       <div class="server-setup">
-        <h3>Server Setup</h3>
-        <p style="line-height: 1.5;">Unlike the upstream repo at <a href="https://github.com/MunyDev/Icarus">MunyDev/Icarus</a>, applefritter had created a docker image, which fixes many issues with the proxy server. Although it is not updated for ICARUS-Revived, for ICARUS-Revived/ICARUS-Lite, I recommend going to their github repos. For windows users, ICARUS-Lite has offered a prebuilt exe in it's releases page, simply download it and run it, and it should work out, if not look into ICARUS-Lite's <code>README.md</code>
-        </p>
-        <p>Simply install docker on your preferred device and then:</p>
+        <h3 id="server-setup">Server Setup</h3>
+        <p>Use Icarus-Lite for this, which has been tested on all operating systems.</p>
+        <h4 id="windows-instructions">Windows Instructions</h4>
         <ol>
-          <li>clone docker image with <code>docker pull appleflyer/icarus-server</code>
-          </li>
-          <li>run docker image <code>docker run -it -p 0.0.0.0:8126:8126 appleflyer/icarus-server</code>
-          </li>
-          <li>A server should start at <code>https://localhost:8126</code>
-          </li>
+        <li>Go to Icarus-Lite's <a href="https://github.com/cosmicdevv/Icarus-Lite/releases/latest/"> latest releases</a> </li>
+        <li>Download the exe</li>
+        <li>Run the exe</li>
+        <li>follow instructions ICARUS-Lite gives you and it'll tell you IP and port to use. If it doesn't work check the ICARUS-lite repo's <code>README.md</code></li>
         </ol>
+        <h4 id="linuxmac-os-intructions">Linux/Mac OS Intructions</h4>
+        <p>make sure you the following installed ==&gt; <code>python</code>, <code>git</code></p>
+        <ol>
+        <li>clone github repo with <code>git clone https://github.com/cosmicdevv/Icarus-Lite.git</code></li>
+        <li>change directory to it by <code>cd Icarus-Lite</code></li>
+        <li>install all python package dependencies by <code>pip install -r requirements.txt</code> (if this doesn't work look at the Linux/Mac Instructions <a href="https://github.com/cosmicdevv/Icarus-Lite/?tab=readme-ov-file#linuxmac">here</a>)</li>
+        <li>Run the main python file by <code>python main.py</code></li>
+        <li>ICARUS-Lite will attempt to automatically set up the required file structure and download the latest SSL certificates from kxtz's Icarus fork.</li>
+        <li>follow instructions ICARUS-Lite gives you and it'll tell you IP and port to use. If it doesn't work check the ICARUS-lite repo's <code>README.md</code></li>
+        </ol>
+        
         <h4>Public servers</h4>
         <p>you should never use public servers, use this as a last ditch if you can't get the server running or if you don't have a device to host on</p>
         <ul>
