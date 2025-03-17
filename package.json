@@ -6,11 +6,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "clean": "bunx  prettier --write '**/*.{astro,js,ts,jsx,tsx,scss,md,json}'"
   },
   "dependencies": {
     "astro": "^5.5.2",
     "bun": "^1.2.5",
-    "lucide-astro": "^0.482.0"
+    "lucide-astro": "^0.482.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^0.14.1"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.85.1"
   }
 }

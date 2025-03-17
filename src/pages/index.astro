@@ -1,81 +1,134 @@
 ---
-import '../styles/global.css';
-import { GitCommitHorizontal } from 'lucide-astro'
-import { execSync } from 'child_process'
+import "../styles/global.scss";
+import { GitCommitHorizontal } from "lucide-astro";
+import { execSync } from "child_process";
 const getGitInfo = () => {
   try {
     const exec = (cmd: string) => execSync(cmd).toString().trim();
     return {
       commitHash: exec(`git rev-parse HEAD`),
-      commitMessage: exec(`git log -1 --pretty=%B`)
+      commitMessage: exec(`git log -1 --pretty=%B`),
     };
   } catch (error) {
     console.error("Error getting Git info:");
     console.error(error);
-    return { commitHash: "", commitMessage: ""};
+    return { commitHash: "", commitMessage: "" };
   }
 };
-const commit = getGitInfo()
-const commitHash = getGitInfo().commitHash
-const commitHashShort = getGitInfo().commitHash.slice(0, 7)
-const commitMessage = getGitInfo().commitMessage.trim()
-
+const commit = getGitInfo();
+const commitHash = getGitInfo().commitHash;
+const commitHashShort = getGitInfo().commitHash.slice(0, 7);
+const commitMessage = getGitInfo().commitMessage.trim();
 ---
-<!DOCTYPE HTML>
+
+<!doctype html>
 <html>
   <head>
     <title>ICARUS - ChromeOS Unenrollment Exploit</title>
-    <link href="style.css" rel="stylesheet" type="text/css">
-    <meta name="description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
-    <meta property="og:url" content="https://icarus.t3rm1n4l.dev">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="ICARUS">
-    <meta property="og:description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="icarus.t3rm1n4l.dev">
-    <meta property="twitter:url" content="https://icarus.t3rm1n4l.dev">
-    <meta name="twitter:title" content="ICARUS">
-    <meta name="twitter:description" content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception.">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <meta
+      name="description"
+      content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception."
+    />
+    <meta property="og:url" content="https://icarus.t3rm1n4l.dev" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ICARUS" />
+    <meta
+      property="og:description"
+      content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="icarus.t3rm1n4l.dev" />
+    <meta property="twitter:url" content="https://icarus.t3rm1n4l.dev" />
+    <meta name="twitter:title" content="ICARUS" />
+    <meta
+      name="twitter:description"
+      content="ICARUS is an exploit for Chrome devices allowing unenrollment using device management interception."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="https://t3rm1n4l.dev/img/favicon.ico" sizes="96x96" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://t3rm1n4l.dev/img/favicon.ico"
+      sizes="96x96"
+    />
   </head>
   <body>
     <div class="header" style="z-index:0;padding:0;margin:0;">
       <div class="retro"></div>
-      <div style="top:5px; right:10px; position:absolute; font-size:large;">--:--</div>
+      <div style="top:5px; right:10px; position:absolute; font-size:large;">
+        --:--
+      </div>
       <div style="bottom:10px; left:10px; position:absolute; font-size:11px;">
-        <GitCommitHorizontal style={{ verticalAlign: 'middle', stroke: '#edf1ff' }} />
-        <a style="color:#edf1ff;" href={`https://github.com/T3M1N4L/icarus/commit/${commitHash}`}> {commitHashShort}</a> - {commitMessage}
+        <GitCommitHorizontal
+          style={{ verticalAlign: "middle", stroke: "#edf1ff" }}
+        />
+        <a
+          style="color:#edf1ff;"
+          href={`https://github.com/T3M1N4L/icarus/commit/${commitHash}`}
+        >
+          {commitHashShort}</a
+        > - {commitMessage}
       </div>
       <h1>ICARUS</h1>
-      <small>ChromeOS Unenrollment via Proxy and Custom Certificate Authority</small>
+      <small
+        >ChromeOS Unenrollment via Proxy and Custom Certificate Authority</small
+      >
       <div style="padding-bottom: 3%;"></div>
     </div>
     <div class="main">
       <div class="about">
-        <h3> What is ICARUS?</h3>
-        <p>ICARUS is an exploit for Chrome devices which allows people to unenroll devices with device management interception using a proxy and a custom Certificate Authority.</p>
+        <h3>What is ICARUS?</h3>
+        <p>
+          ICARUS is an exploit for Chrome devices which allows people to
+          unenroll devices with device management interception using a proxy and
+          a custom Certificate Authority.
+        </p>
         <div class="comment-box red-border">
           <p>
-            <strong>WARNING:</strong> Never use public proxies for ICARUS. Always self-host to avoid security risks. Do not use a third-party server since they CAN remotely access your chromebook, remotely enroll you into their domain, giving them your IP and other info, and everything that Google can do like wipe your chromebook and other things.
+            <strong>WARNING:</strong> Never use public proxies for ICARUS. Always
+            self-host to avoid security risks. Do not use a third-party server since
+            they CAN remotely access your chromebook, remotely enroll you into their
+            domain, giving them your IP and other info, and everything that Google
+            can do like wipe your chromebook and other things.
           </p>
         </div>
-        <h3> What is ICARUS-Lite?</h3>
-        <p>The original dev team had stopped maintaining ICARUS, cosmic, along with the help of others has stepped up to help.</p>
+        <h3>What is ICARUS-Lite?</h3>
+        <p>
+          The original dev team had stopped maintaining ICARUS, cosmic, along
+          with the help of others has stepped up to help.
+        </p>
         <ul>
-          <li>Repo: <a href="https://github.com/cosmicdevv/Icarus-Lite/">https://github.com/cosmicdevv/Icarus-Lite/</a>
+          <li>
+            Repo: <a href="https://github.com/cosmicdevv/Icarus-Lite/"
+              >https://github.com/cosmicdevv/Icarus-Lite/</a
+            >
           </li>
           <li>A Python-compiled version of httpmitm.</li>
           <li>Includes QoL features like an auto cert updater.</li>
           <li>Compatible with Windows.</li>
           <li>More info available on its repo (star it to be cool!).</li>
           <li>Maintained by Cosmic.</li>
-          <li>ICARUS-Lite does NOT currently have functionality to build Icarus shims. Please download a prebuilt shim to use ICARUS-Lite, or use ICARUS-Revived.</li>
+          <li>
+            ICARUS-Lite does NOT currently have functionality to build Icarus
+            shims. Please download a prebuilt shim to use ICARUS-Lite, or use
+            ICARUS-Revived.
+          </li>
         </ul>
-        <h3> What is ICARUS-Revived?</h3>
-        <p>ICARUS-Revived is essentially a maintained version of the original repo with new certs and other stuff.</p>
+        <h3>What is ICARUS-Revived?</h3>
+        <p>
+          ICARUS-Revived is essentially a maintained version of the original
+          repo with new certs and other stuff.
+        </p>
         <p>Repos:</p>
         <ul>
           <li>
@@ -87,35 +140,63 @@ const commitMessage = getGitInfo().commitMessage.trim()
         </ul>
         <h4 style="font-size: 30px;">What you need/Requirements</h4>
         <ul>
-          <li>A Chromebook atleast on <code>kernver 4</code> or below, as well as being on 125-130 (I recommend <a href="https://docs.google.com/presentation/d/1NCXDfjsBVDSR3JrpRXy4C-jz48mkIFaBVntpcbnJX_0/edit#slide=id.g14696d35f7e_0_249">downgrading</a> to v125) </li>
+          <li>
+            A Chromebook atleast on <code>kernver 4</code> or below, as well as being
+            on 125-130 (I recommend <a
+              href="https://docs.google.com/presentation/d/1NCXDfjsBVDSR3JrpRXy4C-jz48mkIFaBVntpcbnJX_0/edit#slide=id.g14696d35f7e_0_249"
+              >downgrading</a
+            > to v125)
+          </li>
           <li>A personal device like a windows/mac/linux laptop</li>
-          <li>A USB drive / SD card greater than around 8GB; used to boot the modified shim</li>
-          <li>A router and an internet connection; so that you can host the proxy</li>
+          <li>
+            A USB drive / SD card greater than around 8GB; used to boot the
+            modified shim
+          </li>
+          <li>
+            A router and an internet connection; so that you can host the proxy
+          </li>
           <li>A brain</li>
         </ul>
       </div>
       <div class="installation">
         <h3>Building an ICARUS modified shim</h3>
-        <p>Clone either <a href="https://git.kxtz.dev/kxtzownsu/icarus">fanq's repo</a> or <a href="https://git.kxtz.dev/kxtzownsu/icarus">kxtz's repo</a> (for this guide i will be using fanq's repo) and set up the environment (Make sure you have python3, python3-venv, and protobuf installed beforehand) : </p>
+        <p>
+          Clone either <a href="https://git.kxtz.dev/kxtzownsu/icarus"
+            >fanq's repo</a
+          > or <a href="https://git.kxtz.dev/kxtzownsu/icarus">kxtz's repo</a> (for
+          this guide i will be using fanq's repo) and set up the environment (Make
+          sure you have python3, python3-venv, and protobuf installed beforehand)
+          :
+        </p>
         <ol>
-          <li>Clone the github repostiory: <code>git clone --recursive https://github.com/fanqyxl/icarus</code>
+          <li>
+            Clone the github repostiory: <code
+              >git clone --recursive https://github.com/fanqyxl/icarus</code
+            >
           </li>
-          <li>Change the directory to ICARUS: <code>cd icarus</code>
+          <li>Change the directory to ICARUS: <code>cd icarus</code></li>
+          <li>
+            Setup the Python Virtual Environment: <code>make setup-venv</code>
           </li>
-          <li>Setup the Python Virtual Environment: <code>make setup-venv</code>
-          </li>
-          <li>Enter the Virtual Environment: <code>make enter-venv</code>
-          </li>
-          <li>Setup Python: <code>make setup-python</code>
-          </li>
-          <li>Build the packed data: <code>make build-packed-data</code>
-          </li>
+          <li>Enter the Virtual Environment: <code>make enter-venv</code></li>
+          <li>Setup Python: <code>make setup-python</code></li>
+          <li>Build the packed data: <code>make build-packed-data</code></li>
         </ol>
-        <p>Ensure Chrome's PKIMetadata component is up to date but below version 2000:</p>
+        <p>
+          Ensure Chrome's PKIMetadata component is up to date but below version
+          2000:
+        </p>
         <ol>
-          <li>Open Chrome on your build machine and go to <code>chrome://components</code>. </li>
-          <li>Press <code>CTRL + F</code> and search for "PKIMetadata". </li>
-          <li>Click "Check for Updates" and ensure it is up to date but below version 2000.</li>
+          <li>
+            Open Chrome on your build machine and go to <code
+              >chrome://components</code
+            >.
+          </li>
+          <li>Press <code>CTRL + F</code> and search for "PKIMetadata".</li>
+          <li>
+            Click "Check for Updates" and ensure it is up to date but below
+            version 2000.
+          </li>
         </ol>
         <p>Generate the PKIMetadata:</p>
         <ol>
@@ -134,29 +215,55 @@ const commitMessage = getGitInfo().commitMessage.trim()
         </ol>
         <h3>Flashing a prebuilt shim</h3>
         <ol>
-          <li>Go to one of these file hosts: <ul>
+          <li>
+            Go to one of these file hosts: <ul>
               <li>
-                <a href="https://dl.fanqyxl.net/ChromeOS/Prebuilts/Icarus">fanqyxl's file host</a>
+                <a href="https://dl.fanqyxl.net/ChromeOS/Prebuilts/Icarus"
+                  >fanqyxl's file host</a
+                >
               </li>
               <li>
-                <a href="https://dl.kxtz.dev/ChromeOS/shims/Icarus">kxtz's file host</a>
+                <a href="https://dl.kxtz.dev/ChromeOS/shims/Icarus"
+                  >kxtz's file host</a
+                >
               </li>
-            </ul> and download a prebuilt shim for your corresponding board. </li>
-          <li>Flash the shim to a USB not and SD card since they often have issues, if you don't know how to flash it's in the Troubleshooting section.</li>
+            </ul> and download a prebuilt shim for your corresponding board.
+          </li>
+          <li>
+            Flash the shim to a USB not and SD card since they often have
+            issues, if you don't know how to flash it's in the Troubleshooting
+            section.
+          </li>
         </ol>
         <h3>Booting the shim</h3>
-        <p>Now boot the shim, and ICARUS will attempt to modify your stateful partition. It should say <code>Finished Click Enter to Reboot</code>, which you will click enter, and everything SHOULD go smoothly </p>
+        <p>
+          Now boot the shim, and ICARUS will attempt to modify your stateful
+          partition. It should say <code>Finished Click Enter to Reboot</code>,
+          which you will click enter, and everything SHOULD go smoothly
+        </p>
         <div class="comment-box">
           <p>
             <strong>Steps on how to boot a shim:</strong>
           </p>
           <ol>
-            <li>Get to the recovery screen by pressing <code>Esc+Refresh+Power</code>
+            <li>
+              Get to the recovery screen by pressing <code
+                >Esc+Refresh+Power</code
+              >
             </li>
-            <li>Once you get to the recovery screen, press <code>Ctrl+D</code>
+            <li>
+              Once you get to the recovery screen, press <code>Ctrl+D</code>
             </li>
-            <li>It's going to try to make you go back to Secure Mode (It's going to turn off and open up a gray screen), ignore this and press <code>Esc+Refresh+Power</code> once more </li>
-            <li>You should be in developer mode and on the recovery screen, now plug in your USB and it should boot the shim!</li>
+            <li>
+              It's going to try to make you go back to Secure Mode (It's going
+              to turn off and open up a gray screen), ignore this and press <code
+                >Esc+Refresh+Power</code
+              > once more
+            </li>
+            <li>
+              You should be in developer mode and on the recovery screen, now
+              plug in your USB and it should boot the shim!
+            </li>
           </ol>
         </div>
         <div class="comment-box red-border">
@@ -164,58 +271,115 @@ const commitMessage = getGitInfo().commitMessage.trim()
             <strong>Various errors you may encounter</strong>
           </p>
           <ul>
-            <li>If it gives you a <code>Failed to modify stateful</code> error, simply plug the USB in a different port, if your using a sd card, use a USB </li>
-            <li>If you get a <code>cros_debug</code> error, simply retry and it should work </li>
+            <li>
+              If it gives you a <code>Failed to modify stateful</code> error, simply
+              plug the USB in a different port, if your using a sd card, use a USB
+            </li>
+            <li>
+              If you get a <code>cros_debug</code> error, simply retry and it should
+              work
+            </li>
           </ul>
         </div>
       </div>
       <div class="server-setup">
         <h3 id="server-setup">Server Setup</h3>
-        <p>Use Icarus-Lite for this, which has been tested on all operating systems.</p>
+        <p>
+          Use Icarus-Lite for this, which has been tested on all operating
+          systems.
+        </p>
         <h4 id="windows-instructions">Windows Instructions</h4>
         <ol>
-        <li>Go to Icarus-Lite's <a href="https://github.com/cosmicdevv/Icarus-Lite/releases/latest/"> latest releases</a> </li>
-        <li>Download the exe</li>
-        <li>Run the exe</li>
-        <li>follow instructions ICARUS-Lite gives you and it'll tell you IP and port to use. If it doesn't work check the ICARUS-lite repo's <code>README.md</code></li>
+          <li>
+            Go to Icarus-Lite's <a
+              href="https://github.com/cosmicdevv/Icarus-Lite/releases/latest/"
+            >
+              latest releases</a
+            >
+          </li>
+          <li>Download the exe</li>
+          <li>Run the exe</li>
+          <li>
+            follow instructions ICARUS-Lite gives you and it'll tell you IP and
+            port to use. If it doesn't work check the ICARUS-lite repo's <code
+              >README.md</code
+            >
+          </li>
         </ol>
         <h4 id="linuxmac-os-intructions">Linux/Mac OS Intructions</h4>
-        <p>make sure you the following installed ==&gt; <code>python</code>, <code>git</code></p>
+        <p>
+          make sure you the following installed ==&gt; <code>python</code>, <code
+            >git</code
+          >
+        </p>
         <ol>
-        <li>clone github repo with <code>git clone https://github.com/cosmicdevv/Icarus-Lite.git</code></li>
-        <li>change directory to it by <code>cd Icarus-Lite</code></li>
-        <li>install all python package dependencies by <code>pip install -r requirements.txt</code> (if this doesn't work look at the Linux/Mac Instructions <a href="https://github.com/cosmicdevv/Icarus-Lite/?tab=readme-ov-file#linuxmac">here</a>)</li>
-        <li>Run the main python file by <code>python main.py</code></li>
-        <li>ICARUS-Lite will attempt to automatically set up the required file structure and download the latest SSL certificates from kxtz's Icarus fork.</li>
-        <li>follow instructions ICARUS-Lite gives you and it'll tell you IP and port to use. If it doesn't work check the ICARUS-lite repo's <code>README.md</code></li>
+          <li>
+            clone github repo with <code
+              >git clone https://github.com/cosmicdevv/Icarus-Lite.git</code
+            >
+          </li>
+          <li>change directory to it by <code>cd Icarus-Lite</code></li>
+          <li>
+            install all python package dependencies by <code
+              >pip install -r requirements.txt</code
+            > (if this doesn't work look at the Linux/Mac Instructions <a
+              href="https://github.com/cosmicdevv/Icarus-Lite/?tab=readme-ov-file#linuxmac"
+              >here</a
+            >)
+          </li>
+          <li>Run the main python file by <code>python main.py</code></li>
+          <li>
+            ICARUS-Lite will attempt to automatically set up the required file
+            structure and download the latest SSL certificates from kxtz's
+            Icarus fork.
+          </li>
+          <li>
+            follow instructions ICARUS-Lite gives you and it'll tell you IP and
+            port to use. If it doesn't work check the ICARUS-lite repo's <code
+              >README.md</code
+            >
+          </li>
         </ol>
-        
+
         <h4>Public servers</h4>
-        <p>you should never use public servers, use this as a last ditch if you can't get the server running or if you don't have a device to host on</p>
+        <p>
+          you should never use public servers, use this as a last ditch if you
+          can't get the server running or if you don't have a device to host on
+        </p>
         <ul>
           <li>
             <strong>fanq's server</strong>
-            <br> IP: <code>72.80.65.133</code>
-            <br> PORT: <code>8126</code>
+            <br /> IP: <code>72.80.65.133</code>
+            <br /> PORT: <code>8126</code>
           </li>
           <li>
             <strong>kxtz's server</strong>
-            <br> IP: <code>172.93.103.55</code>
-            <br> PORT: <code>8126</code>
+            <br /> IP: <code>172.93.103.55</code>
+            <br /> PORT: <code>8126</code>
           </li>
           <li>
             <strong>cosmic's server</strong>
-            <br> IP: <code>146.190.59.243</code>
-            <br> PORT: <code>8126</code>
+            <br /> IP: <code>146.190.59.243</code>
+            <br /> PORT: <code>8126</code>
           </li>
         </ul>
-        <p>Once the chromebook reboots after booting the shim, and your at the Welcome! screen, don't proceed, do the following:</p>
+        <p>
+          Once the chromebook reboots after booting the shim, and your at the
+          Welcome! screen, don't proceed, do the following:
+        </p>
         <ol>
-          <li>Click <code>Shift+Alt+S</code> , It should open up a menu </li>
+          <li>Click <code>Shift+Alt+S</code> , It should open up a menu</li>
           <li>Connect to WiFi from there.</li>
-          <li>Edit proxy settings by clicking on wifi once more (A popup should show up).</li>
+          <li>
+            Edit proxy settings by clicking on wifi once more (A popup should
+            show up).
+          </li>
           <li>Set proxy settings to manual.</li>
-          <li>Set Secure HTTP IP to the IP of your proxy server (local ip if it's hosted on localhost). The port will 99.9% be 8126 unless you changed it</li>
+          <li>
+            Set Secure HTTP IP to the IP of your proxy server (local ip if it's
+            hosted on localhost). The port will 99.9% be 8126 unless you changed
+            it
+          </li>
           <li>Resume setup and your chromebook will unenroll.</li>
         </ol>
       </div>
@@ -229,15 +393,42 @@ const commitMessage = getGitInfo().commitMessage.trim()
         </p>
         <ul>
           <li>Ensure both the device and server are on the same network.</li>
-          <li>If that didn't work, powerwash your device, re-run the modified shim, and keep the server running.</li>
-          <li>Make sure that ICARUS-Lite is recieving and handling the ChromeOS device's requests; check the terminal/window where ICARUS-Lite is running for any output past "ICARUS-Lite is running on...". If nothing else has been output, it means ICARUS-Lite isn't recieving requests from the Chromebook and therefore is not handling them accordingly. In this case:</li>
+          <li>
+            If that didn't work, powerwash your device, re-run the modified
+            shim, and keep the server running.
+          </li>
+          <li>
+            Make sure that ICARUS-Lite is recieving and handling the ChromeOS
+            device's requests; check the terminal/window where ICARUS-Lite is
+            running for any output past "ICARUS-Lite is running on...". If
+            nothing else has been output, it means ICARUS-Lite isn't recieving
+            requests from the Chromebook and therefore is not handling them
+            accordingly. In this case:
+          </li>
           <ul>
-            <li>Re-run the Icarus shim and ensure the target ChromeOS device and the device hosting the proxy are on the <strong>SAME</strong> WiFi network. </li>
-            <li>Ensure the shim used on the target ChromeOS device was built with the same CA (Certificate Authority) used to generate the SSL certificates </li>
+            <li>
+              Re-run the Icarus shim and ensure the target ChromeOS device and
+              the device hosting the proxy are on the <strong>SAME</strong> WiFi
+              network.
+            </li>
+            <li>
+              Ensure the shim used on the target ChromeOS device was built with
+              the same CA (Certificate Authority) used to generate the SSL
+              certificates
+            </li>
             <ul>
-              <li>If you're using a prebuilt shim and don't know what CA was used, consider building your own shim and SSL certificates if nothing else works. </li>
+              <li>
+                If you're using a prebuilt shim and don't know what CA was used,
+                consider building your own shim and SSL certificates if nothing
+                else works.
+              </li>
             </ul>
-            <li>It is also important to note being above ChromeOS v130 or below ChromeOS v125 will cause the target ChromeOS device to reject the connection to the MiniServer, causing the "Can't reach Google" screen. </li>
+            <li>
+              It is also important to note being above ChromeOS v130 or below
+              ChromeOS v125 will cause the target ChromeOS device to reject the
+              connection to the MiniServer, causing the "Can't reach Google"
+              screen.
+            </li>
           </ul>
         </ul>
         <h4>
@@ -247,9 +438,17 @@ const commitMessage = getGitInfo().commitMessage.trim()
           <b>A:</b>
         </p>
         <ul>
-          <li>Get <a href="https://etcher.balena.io/">Balena Etcher</a> (i personally recommend), <a href="https://rufus.ie/en/">rufus</a>, or <a href="https://chromewebstore.google.com/detail/chromebook-recovery-utili/pocpnlppkickgojjlmhdmidojbmbodfm?hl=en">Chromebook Recovery Utility</a>
+          <li>
+            Get <a href="https://etcher.balena.io/">Balena Etcher</a> (i personally
+            recommend), <a href="https://rufus.ie/en/">rufus</a>, or <a
+              href="https://chromewebstore.google.com/detail/chromebook-recovery-utili/pocpnlppkickgojjlmhdmidojbmbodfm?hl=en"
+              >Chromebook Recovery Utility</a
+            >
           </li>
-          <li>Then simply follow the instructions provided on the website, or simply ask chatgpt.</li>
+          <li>
+            Then simply follow the instructions provided on the website, or
+            simply ask chatgpt.
+          </li>
         </ul>
         <h4>
           <b>Q:</b> How to check your kernver
@@ -258,11 +457,20 @@ const commitMessage = getGitInfo().commitMessage.trim()
           <b>A:</b>
         </p>
         <ul>
-          <li>Kernver - ˈkɝːn.vɚ : noun | Kernel Version; determines what version you can downgrade until; see <a href="https://kvs.kxtz.dev/">KVS</a>
+          <li>
+            Kernver - ˈkɝːn.vɚ : noun | Kernel Version; determines what version
+            you can downgrade until; see <a href="https://kvs.kxtz.dev/">KVS</a>
           </li>
-          <li>You can check your kernver by going to the recovery screen - <code>Esc+Power+Refresh</code> and then pressing <code>Tab</code>
+          <li>
+            You can check your kernver by going to the recovery screen - <code
+              >Esc+Power+Refresh</code
+            > and then pressing <code>Tab</code>
           </li>
-          <li>You are looking under <code>TPM</code> it should say something like <code>kernver=0x00010004</code>; In my case it's kernver 4 since thats the number it ends in </li>
+          <li>
+            You are looking under <code>TPM</code> it should say something like <code
+              >kernver=0x00010004</code
+            >; In my case it's kernver 4 since thats the number it ends in
+          </li>
         </ul>
       </div>
       <div class="credits">
