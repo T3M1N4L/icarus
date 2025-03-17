@@ -1,0 +1,59 @@
+---
+import MainLayout from "../layouts/main.astro";
+import { GitCommitHorizontal } from "lucide-astro";
+import { execSync } from "child_process";
+const getGitInfo = () => {
+  try {
+    const exec = (cmd: string) => execSync(cmd).toString().trim();
+    return {
+      commitHash: exec(`git rev-parse HEAD`),
+      commitMessage: exec(`git log -1 --pretty=%B`),
+    };
+  } catch (error) {
+    console.error("Error getting Git info:");
+    console.error(error);
+    return { commitHash: "", commitMessage: "" };
+  }
+};
+const commit = getGitInfo();
+const commitHash = getGitInfo().commitHash;
+const commitHashShort = getGitInfo().commitHash.slice(0, 7);
+const commitMessage = getGitInfo().commitMessage.trim();
+---
+
+<MainLayout>
+  <center
+    style="
+ display: flex;
+  align-items: center; /* Centers vertically */
+  justify-content: center; /* Centers horizontally (optional) */
+  height: 100vh; /* Example full viewport height */
+"
+  >
+    <div class="header" style="z-index:0;padding:0;margin:0;">
+      <div class="retro"></div>
+      <div style="top:5px; right:10px; position:absolute; font-size:large;">
+        --:--
+      </div>
+      <div style="bottom:10px; left:10px; position:absolute; font-size:11px;">
+        <GitCommitHorizontal
+          style={{ verticalAlign: "middle", stroke: "#edf1ff" }}
+        />
+        <a
+          style="color:#edf1ff;"
+          href={`https://github.com/T3M1N4L/icarus/commit/${commitHash}`}
+        >
+          {commitHashShort}</a
+        > - {commitMessage}
+      </div>
+      <h1>404</h1>
+      <small>uh oh.. you got lost wanna head back <a href="/">home</a>?</small>
+      <div style="padding-bottom: 3%;"></div>
+    </div>
+  </center>
+  <style is:inline>
+    body {
+      padding: 0 !important;
+    }
+  </style>
+</MainLayout>
