@@ -28,10 +28,8 @@ const commitMessage = getGitInfo().commitMessage.trim();
     <small
       >ChromeOS Unenrollment via Proxy and Custom Certificate Authority</small
     >
-    <div style="top:5px; right:10px; position:absolute; font-size:large;">
-      --:--
-    </div>
-    <div style="bottom:10px; left:10px; position:absolute; font-size:11px;">
+    <div class="retro-time">--:--</div>
+    <div class="commit-details">
       <GitCommitHorizontal
         style={{ verticalAlign: "middle", stroke: "#edf1ff" }}
       />
@@ -86,7 +84,8 @@ const commitMessage = getGitInfo().commitMessage.trim();
       <h3>What is ICARUS-Revived?</h3>
       <p>
         ICARUS-Revived is essentially a maintained version of the original repo
-        with new certs and other stuff, but the server code is still broken. Use ICARUS-Lite for the server.
+        with new certs and other stuff, but the server code is still broken. Use
+        ICARUS-Lite for the server.
       </p>
       <p>Repos:</p>
       <ul>

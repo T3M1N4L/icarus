@@ -32,10 +32,8 @@ const commitMessage = getGitInfo().commitMessage.trim();
   >
     <div class="header" style="z-index:0;padding:0;margin:0;">
       <div class="retro"></div>
-      <div style="top:5px; right:10px; position:absolute; font-size:large;">
-        --:--
-      </div>
-      <div style="bottom:10px; left:10px; position:absolute; font-size:11px;">
+      <div class="retro-time">--:--</div>
+      <div class="commit-details">
         <GitCommitHorizontal
           style={{ verticalAlign: "middle", stroke: "#edf1ff" }}
         />

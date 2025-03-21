@@ -191,6 +191,25 @@ hr::before {
   content: "---";
   color: oklch(var(--color));
 }
+.retro-time {
+  top: 5px;
+  right: 10px;
+  position: absolute;
+  font-size: large;
+}
+.commit-details {
+  bottom: 10px;
+  left: 10px;
+  position: absolute;
+  font-size: 11px;
+}
+
+@media (max-width: 768px) {
+  .commit-details {
+    display: none;
+  }
+}
+
 .retro::before {
   content: " ";
   display: block;
