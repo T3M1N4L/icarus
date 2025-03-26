@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "astro": "^5.5.4",
-    "bun": "^1.2.5",
+    "bun": "^1.2.6",
     "lucide-astro": "^0.482.0",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1"
