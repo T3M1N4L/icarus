@@ -10,13 +10,13 @@
     "clean": "bunx  prettier --write '**/*.{astro,js,ts,jsx,tsx,scss,md,json}'"
   },
   "dependencies": {
-    "astro": "^5.5.6",
+    "astro": "^5.6.1",
     "bun": "^1.2.8",
     "lucide-astro": "^0.482.0",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1"
   },
   "devDependencies": {
-    "sass-embedded": "^1.86.1"
+    "sass-embedded": "^1.86.3"
   }
 }
