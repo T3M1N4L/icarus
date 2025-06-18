@@ -10,7 +10,7 @@
     "clean": "bunx  prettier --write '**/*.{astro,js,ts,jsx,tsx,scss,md,json}'"
   },
   "dependencies": {
-    "astro": "^5.8.1",
+    "astro": "^5.9.4",
     "bun": "^1.2.15",
     "lucide-astro": "^0.482.0",
     "prettier": "^3.5.3",
